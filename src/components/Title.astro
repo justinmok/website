@@ -1,0 +1,94 @@
+---
+import '@fontsource/syne/800.css';
+interface Props {
+    text: string,
+}
+
+const { text } = Astro.props;
+---
+
+<span class="title">{text}</span>
+
+<style>
+    .title {
+		display: inline;
+		font-family: 'Syne', sans-serif;
+        font-size: 5.6em;
+		font-weight: 800;
+		color: #ffffff;
+		background-image: -webkit-linear-gradient(45deg, #ffffff 0%, #99dfff 100%);
+		background-clip: text;
+		-webkit-background-clip: text;
+		text-fill-color: transparent;
+		-webkit-text-fill-color: transparent;
+		filter: drop-shadow(3px 3px gray);
+
+		/* 2024-08-13 Retrieved from StackOverflow: https://stackoverflow.com/a/4448972 */
+    	-moz-user-select: -moz-none;
+    	-khtml-user-select: none;
+    	-webkit-user-select: none;
+		
+    	/*
+    	  Introduced in IE 10.
+    	  See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    	*/
+    	-ms-user-select: none;
+    	user-select: none;
+}
+	
+</style>
+
+<script>
+	let isMouseActive = false;
+
+	const updateGradient = (e: MouseEvent) => {
+		const { clientX, clientY } = e;
+		const title = document.querySelector('.title') as HTMLElement;
+
+		// get title element center pos
+		const { top, bottom, left, right } = title.getBoundingClientRect();
+		const centerX = left - ((left - right) / 2);
+		const centerY = top - ((top - bottom) / 2);
+
+		// difference between mouse and center pos
+		const dx = clientX - centerX;
+		const dy = clientY - centerY;
+
+		// calculate positive angle in deg
+		const theta = Math.atan2(dy, dx) * (180 / Math.PI);
+		const mod = Math.floor((theta + 360) % 360);
+
+		// change gradient
+		title.style.backgroundImage = `-webkit-linear-gradient(${mod}deg, #ffffff 0%, #99dfff 100%)`;
+	}
+
+	// function to limit gradient update
+	const debounce = (fn: (any), delay: number) => {
+		let timeout: number;
+		return function(...args: any) {
+			if (timeout) clearTimeout(timeout);
+			timeout = setTimeout(() => { fn(...args) }, delay)
+		}
+	}
+
+	const debouncedUpdate = debounce(updateGradient, 1);
+
+	const mouseActive = () => {
+		console.log('active')
+		if (!isMouseActive) {
+			document.addEventListener('mousemove', debouncedUpdate);
+			isMouseActive = true;
+		}
+	}
+
+	const mouseInactive = () => {
+		console.log('inactive')
+		if (isMouseActive) {
+			document.removeEventListener('mousemove', debouncedUpdate);
+			isMouseActive = false;
+		}
+	}
+
+	window.addEventListener('focus', mouseActive);
+	window.addEventListener('blur', mouseInactive);
+</script>

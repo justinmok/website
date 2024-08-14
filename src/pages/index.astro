@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Title from '../components/Title.astro';
+import Links from '../components/Links.astro';
+import '../styles/index.css'
+import '@fontsource/roboto/100.css';
+---
+
+<Layout title="Home - justinmok.me">
+	<main>
+		<div class="container">
+			<Title text="justin mok" />
+			<p id="bio">homelab enthusiast, independent sysadmin</p>
+			<Links />
+		</div>
+	</main>
+</Layout>
+
+<style>
+	#bio {
+		font-size: 2.4em;
+		letter-spacing: 2px;
+	}
+</style>

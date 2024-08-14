@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Title from '../components/Title.astro';
+import '../styles/index.css';
+import '@fontsource/roboto/100.css';
+---
+<Layout title="Blog - justinmok.me">
+	<main>
+		<div class="container">
+            <Title text='wip'></Title>
+			<p>
+                <span class="tnr">blog</span>&nbsp;&nbsp;<span class="small">ˈbläg</span><br>
+                <span class="text">a website that contains online personal reflections, comments, and
+                <br>often hyperlinks, videos, and photographs provided by the writer</span>
+                <br>
+                <span class="smaller">
+                    “blog,” Merriam-Webster.com Dictionary, https://www.merriam-webster.com/dictionary/blog
+                </span>
+            </p>
+		</div>
+	</main>
+</Layout>
+
+<style>
+    .tnr {
+        font-family:'Times New Roman', Times, serif;
+        font-size: 2.4em;
+    }
+    .small {
+        font-size: 1.8em;
+    }
+    .smaller {
+        line-height: 3em;
+        font-size: 1.1em;
+    }
+	.text {
+		font-family: 'Roboto';
+        font-size: 1.8em;
+		letter-spacing: 2px;
+	}
+</style>
